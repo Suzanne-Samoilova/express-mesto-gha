@@ -1,47 +1,65 @@
 const Card = require('../models/card');
 
+// ---------------------------------------------------------------------------------------------------------
+// Получить все карточки
+// ---------------------------------------------------------------------------------------------------------
 const getCards = (req, res) => {
   Card.find({})
     .then((cards) => {
       if (cards.length === 0) {
-        res.status(404).send({ message: "Нет карточек" });
+        res.status(404)
+          .send({ message: "Нет карточек" });
         return;
       }
-      res.status(200).send(cards);
+      res.status(200)
+        .send(cards);
     })
     .catch((err) => {
-      res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
+      res.status(500)
+        .send({ message: `Внутренняя ошибка сервера: ${err}` });
     });
 };
 
+// ---------------------------------------------------------------------------------------------------------
+// Создать новую карточку
+// ---------------------------------------------------------------------------------------------------------
 const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
     .then((card) => {
-      res.status(200).send(card);
+      res.status(200)
+        .send(card);
     })
     .catch((err) => {
-      res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
+      res.status(500)
+        .send({ message: `Внутренняя ошибка сервера: ${err}` });
     });
 };
 
+// ---------------------------------------------------------------------------------------------------------
+// Удалить карточку
+// ---------------------------------------------------------------------------------------------------------
 const deleteCard = (req, res) => {
   const id = req.params.cardId;
   Card.findByIdAndRemove(id)
     .then((card) => {
       if (!card) {
-        res.status(404).send({ message: "Нет карточки с таким id" });
+        res.status(404)
+          .send({ message: "Нет карточки с таким id" });
         return;
       }
-      res.status(200).send(card);
+      res.status(200)
+        .send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(400).send({ message: `Передан некорректный id: ${err}` });
+        res.status(400)
+          .send({ message: `Передан некорректный id: ${err}` });
         return;
       }
-      res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
+      res.status(500)
+        .send({ message: `Внутренняя ошибка сервера: ${err}` });
     });
 };
 
