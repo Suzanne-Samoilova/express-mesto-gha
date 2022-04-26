@@ -71,16 +71,21 @@ const updateProfile = (req, res, next) => {
     { name, about },
     { new: true }
   )
+
     .then((user) => {
-      res.status(200).send(user);
+      if (user) {
+        res.status(200).send(user);
+      } else {
+        res.status(404).send({ message: `Пользователь не найден` });
+      }
     })
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
+        // next(res.status(400).send({ message: `Переданы некорректные данные` }));
         res.status(400).send({ message: `Переданы некорректные данные` });
       }
       next(err);
-    })
-    .catch(next);
+    });
 };
 
 // ---------------------------------------------------------------------------------------------------------
