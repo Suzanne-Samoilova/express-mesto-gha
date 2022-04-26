@@ -52,6 +52,9 @@ const createUser = (req, res, next) => {
       res.status(200).send(user);
     })
     .catch((err) => {
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
+        res.status(400).send({ message: `Переданы некорректные данные` });
+      }
       res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
       next(err);
     })
