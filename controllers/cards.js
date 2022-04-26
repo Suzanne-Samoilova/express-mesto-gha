@@ -6,7 +6,7 @@ const Card = require('../models/card');
 const getCards = (req, res, next) => {
   Card.find ({})
     .then((cards) => {
-      if (cards.length === 0) {
+      if (!cards) {
         res.status(404).send({ message: "Нет карточек" });
         return;
       }
@@ -44,10 +44,7 @@ const createCard = (req, res, next) => {
 // ---------------------------------------------------------------------------------------------------------
 const deleteCard = (req, res, next) => {
   const id = req.params.cardId;
-  Card.findByIdAndRemove (
-    id,
-    { new: true, runValidators: true }
-  )
+  Card.findByIdAndRemove (id)
     .then((card) => {
       if (!card) {
         res.status(404).send({ message: "Карточка не найдена" });
