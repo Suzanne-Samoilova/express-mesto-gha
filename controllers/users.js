@@ -69,9 +69,8 @@ const updateProfile = (req, res, next) => {
   User.findByIdAndUpdate (
     req.user._id,
     { name, about },
-    { new: true }
+    { new: true, runValidators: true }
   )
-
     .then((user) => {
       if (user) {
         res.status(200).send(user);
@@ -81,11 +80,12 @@ const updateProfile = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
-        // next(res.status(400).send({ message: `Переданы некорректные данные` }));
         res.status(400).send({ message: `Переданы некорректные данные` });
       }
+      res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
       next(err);
-    });
+    })
+    .catch(next);
 };
 
 // ---------------------------------------------------------------------------------------------------------
