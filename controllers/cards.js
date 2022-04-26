@@ -45,7 +45,9 @@ const createCard = (req, res, next) => {
 // ---------------------------------------------------------------------------------------------------------
 const deleteCard = (req, res, next) => {
   const id = req.params.cardId;
-  Card.findByIdAndRemove (id)
+  Card.findByIdAndRemove (
+    id,
+    { new: true })
     .then((card) => {
       if (!card) {
         res.status(404).send({ message: "Карточка не найдена" });
