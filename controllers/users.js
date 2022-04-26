@@ -74,17 +74,33 @@ const updateProfile = (req, res, next) => {
     .then((user) => {
       if (!user) {
         res.status(404).send({ message: `Пользователь не найден` });
-        return;
       }
+    })
+    .then((user) => {
       res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         res.status(400).send({ message: `Переданы некорректные данные` });
       }
+      res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
       next(err);
     })
     .catch(next);
+
+    // .then((user) => {
+    //   if (!user) {
+    //     res.status(404).send({ message: `Пользователь не найден` });
+    //     return;
+    //   }
+    // })
+    // .catch((err) => {
+    //   if (err.name === 'CastError' || err.name === 'ValidationError') {
+    //     res.status(400).send({ message: `Переданы некорректные данные` });
+    //   }
+    //   next(err);
+    // })
+    // .catch(next);
 };
 
 // ---------------------------------------------------------------------------------------------------------
