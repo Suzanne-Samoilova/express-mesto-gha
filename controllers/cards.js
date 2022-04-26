@@ -23,7 +23,6 @@ const getCards = (req, res, next) => {
 // Создать новую карточку
 // ---------------------------------------------------------------------------------------------------------
 const createCard = (req, res, next) => {
-  console.log(req.user._id);
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create ({ name, link, owner })
@@ -46,18 +45,20 @@ const createCard = (req, res, next) => {
 const deleteCard = (req, res, next) => {
   const id = req.params.cardId;
   Card.findByIdAndRemove (id)
-
-
     .then((card) => {
       if (!card) {
         res.status(404).send({ message: "Карточка не найдена" });
         return;
       }
-        Card.findByIdAndDelete(req.params.cardId)
-          .then((deletedCard) => {
-            res.status(200).send(deletedCard);
-          })
-          .catch(next);
+      res.status(200).send(card);
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: `Переданы некорректные данные: ${err}` });
+        return;
+      }
+      res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
+      next(err);
     })
     .catch(next);
 };
