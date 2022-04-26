@@ -72,10 +72,6 @@ const updateProfile = (req, res, next) => {
     { new: true }
   )
     .then((user) => {
-      if (!user) {
-        res.status(404).send({ message: `Пользователь не найден` });
-        return;
-      }
       res.status(200).send(user);
     })
     .catch((err) => {
