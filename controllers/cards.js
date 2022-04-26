@@ -28,9 +28,12 @@ const createCard = (req, res, next) => {
   const owner = req.user._id;
   Card.create ({ name, link, owner })
     .then((card) => {
-      res.status(200).send(card);
-    })
+        res.status(200).send(card);
+      })
     .catch((err) => {
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
+        res.status(400).send({ message: `Переданы некорректные данные` });
+      }
       res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
       next(err);
     })
