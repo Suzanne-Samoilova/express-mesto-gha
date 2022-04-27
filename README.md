@@ -5,7 +5,8 @@
 ![Express](https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white)
 ![Node](https://img.shields.io/badge/-Node.js-469837?logo=Node.js&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/-MongoDB-56a14b?logo=mongodb&logoColor=white)
-![API&WebStorm](https://img.shields.io/badge/-API-blue?logo=WebStorm)
+![API](https://img.shields.io/badge/-API-blue)
+![WebStorm](https://img.shields.io/badge/-WebStorm-blue?logo=WebStorm)
 
 
 ## Настройка бейджей статуса тестов
