@@ -26,16 +26,16 @@ const createCard = (req, res) => {
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         res.status(400).send({ message: 'Переданы некорректные данные' });
-      } else {
-        res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
+        return;
       }
+        res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
     });
 };
 
 // -----------------------------------------------------------------------------
 // Удалить карточку
 // -----------------------------------------------------------------------------
-const deleteCard = (req, res, next) => {
+const deleteCard = (req, res) => {
   const id = req.params.cardId;
   Card.findByIdAndRemove(id)
     .then((card) => {
@@ -51,15 +51,13 @@ const deleteCard = (req, res, next) => {
         return;
       }
       res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
-      next(err);
-    })
-    .catch(next);
+    });
 };
 
 // -----------------------------------------------------------------------------
 // Поставить лайк
 // -----------------------------------------------------------------------------
-const likeCard = (req, res, next) => {
+const likeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
@@ -75,16 +73,16 @@ const likeCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Переданы некорректные данные' });
+        return;
       }
-      next(err);
-    })
-    .catch(next);
+      res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
+    });
 };
 
 // -----------------------------------------------------------------------------
 // Удалить лайк
 // -----------------------------------------------------------------------------
-const dislikeCard = (req, res, next) => {
+const dislikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
@@ -100,10 +98,10 @@ const dislikeCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Переданы некорректные данные' });
+        return;
       }
-      next(err);
-    })
-    .catch(next);
+      res.status(500).send({ message: `Внутренняя ошибка сервера: ${err}` });
+    });
 };
 
 module.exports = {
