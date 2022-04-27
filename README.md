@@ -9,17 +9,6 @@
 ![WebStorm](https://img.shields.io/badge/-WebStorm-blue?logo=WebStorm)
 
 
-## Настройка бейджей статуса тестов
-Перед началом работы над проектом рекомендуется исправить бейджи, отражающие статус прохождения тестов.
-Для этого замените разметку бейджей на следующий фрагмент, подставив вместо `${имя_пользователя}` и `${имя_репозитория}` соответствующие значения.
-
-```
-[![Tests for sprint 13](https://github.com/Suzanne-Samoilova/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/Suzanne-Samoilova/express-mesto-gha/actions/workflows/tests-13-sprint.yml) 
-
-[![Tests for sprint 14](https://github.com/Suzanne-Samoilova/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/Suzanne-Samoilova/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
-```
-
-
 ## Директории
 
 `/routes` — папка с файлами роутера  
