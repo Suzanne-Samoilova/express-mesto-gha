@@ -25,7 +25,7 @@ module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .orFail(() => new NotFoundError('Пользователь не найден'))
     .then((user) => {
-      res.status(200).send(user);
+      res.status(200).send({ user });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
