@@ -11,7 +11,7 @@ const validationUrl = (value) => {
 const validateUser = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().pattern(new RegExp('^[A-Za-z0-9]{8,30}$')),
+    password: Joi.string().required().min(8).max(30),
     name: Joi.string().required().min(2).max(30),
     about: Joi.string().required().min(2).max(20),
     avatar: Joi.string().custom(validationUrl).required(),
@@ -56,7 +56,6 @@ const validateLogin = celebrate({
     password: Joi.string().required().min(8).max(30),
   }),
 });
-
 
 module.exports = {
   validateUser,

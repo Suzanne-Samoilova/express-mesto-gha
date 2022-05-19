@@ -12,7 +12,6 @@ const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { validateUser, validateLogin } = require('./middlewares/validations');
 
-
 const { PORT = 3000 } = process.env;
 const app = express();
 app.use(cookieParser());
@@ -31,10 +30,9 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-
 // роуты, не требующие авторизации
 app.post('/signin', validateLogin, login);
-app.post('/signup', validateUser, createUser);  // вернуть ошибку 403
+app.post('/signup', validateUser, createUser); // вернуть ошибку 403
 
 // все роуты ниже этой строки будут защищены
 app.use(auth);

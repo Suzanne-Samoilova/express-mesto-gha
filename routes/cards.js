@@ -8,9 +8,8 @@ const {
 } = require('../controllers/cards');
 const {
   validateCard,
-  validateCardId
-} = require("../middlewares/validations");
-
+  validateCardId,
+} = require('../middlewares/validations');
 
 cardsRouter.get('/cards', getCards);
 cardsRouter.post('/cards', validateCard, createCard);

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const AuthorizationError = require("../errors/AuthorizationError");
-
+const AuthorizationError = require('../errors/AuthorizationError');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -54,7 +53,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-
 // добавим метод findUserByCredentials схеме пользователя
 // у него будет два параметра — почта и пароль
 userSchema.statics.findUserByCredentials = function (email, password) {
@@ -74,6 +72,5 @@ userSchema.statics.findUserByCredentials = function (email, password) {
         });
     });
 };
-
 
 module.exports = mongoose.model('user', userSchema);

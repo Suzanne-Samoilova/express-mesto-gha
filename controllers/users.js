@@ -2,10 +2,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
-const NotFoundError = require("../errors/NotFoundError");
-const BadReqError = require("../errors/BadReqError");
-const ConflictError = require("../errors/ConflictError");
-const AuthorizationError = require("../errors/AuthorizationError");
+const NotFoundError = require('../errors/NotFoundError');
+const BadReqError = require('../errors/BadReqError');
+const ConflictError = require('../errors/ConflictError');
+const AuthorizationError = require('../errors/AuthorizationError');
 
 // -----------------------------------------------------------------------------
 // Получить всех пользователей
@@ -25,7 +25,7 @@ module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .orFail(() => new NotFoundError('Пользователь не найден'))
     .then((user) => {
-      res.status(200).send(user)
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -42,7 +42,7 @@ module.exports.getUserById = (req, res, next) => {
 module.exports.createUser = (req, res, next) => {
   // хешируем пароль
   bcrypt.hash(req.body.password, 10)
-    .then(hash => User.create({
+    .then((hash) => User.create({
       email: req.body.email,
       password: hash, // записываем хеш в базу
       name: req.body.name,
@@ -51,7 +51,7 @@ module.exports.createUser = (req, res, next) => {
     }))
     .then((user) => {
       res.status(200).send({
-        _id: user._id,  // ?
+        _id: user._id, // ?
         email: user.email,
         name: user.name,
         about: user.about,
@@ -86,7 +86,6 @@ module.exports.getCurrentUser = (req, res, next) => {
       }
     });
 };
-
 
 // -----------------------------------------------------------------------------
 // Обновить профиль
@@ -133,7 +132,6 @@ module.exports.updateAvatar = (req, res, next) => {
       }
     });
 };
-
 
 // -----------------------------------------------------------------------------
 // Аутентификация

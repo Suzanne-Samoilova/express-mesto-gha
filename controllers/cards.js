@@ -1,7 +1,7 @@
 const Card = require('../models/card');
-const BadReqError = require("../errors/BadReqError");
-const NotFoundError = require("../errors/NotFoundError");
-const ForbiddenError = require("../errors/ForbiddenError");
+const BadReqError = require('../errors/BadReqError');
+const NotFoundError = require('../errors/NotFoundError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 // -----------------------------------------------------------------------------
 // Получить все карточки
@@ -84,8 +84,7 @@ module.exports.dislikeCard = (req, res, next) => {
     { new: true },
   )
     .orFail(() => new NotFoundError('Карточка не найдена'))
-    .then((card) =>
-      res.status(200).send({ data: card }))
+    .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadReqError('Переданы некорректные данные'));
