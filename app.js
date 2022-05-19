@@ -46,7 +46,7 @@ app.all('*', () => {
 });
 
 app.use(errors);
-app.use(InternalServerError)
+app.use(InternalServerError);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
