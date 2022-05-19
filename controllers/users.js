@@ -13,7 +13,7 @@ const AuthorizationError = require('../errors/AuthorizationError');
 module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
-      res.status(200).send(users);
+      res.status(200).send({ users });
     })
     .catch(next);
 };
@@ -51,7 +51,6 @@ module.exports.createUser = (req, res, next) => {
     }))
     .then((user) => {
       res.status(200).send({
-        // _id: user._id, // ?
         email: user.email,
         name: user.name,
         about: user.about,
