@@ -73,7 +73,7 @@ module.exports.createUser = (req, res, next) => {
 // -----------------------------------------------------------------------------
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => new NotFoundError('Пользователь не найден'))
+    // .orFail(() => new NotFoundError('Пользователь не найден'))
     .then((user) => {
       res.status(200).send(user);
     })
