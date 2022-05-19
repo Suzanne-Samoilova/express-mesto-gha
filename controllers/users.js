@@ -96,8 +96,7 @@ module.exports.updateProfile = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true, upsert: false },
   )
-    .then((user) =>
-      res.status(200).send(user))
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(new BadReqError('Переданы некорректные данные'));
