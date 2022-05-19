@@ -43,9 +43,7 @@ app.all('*', () => {
   throw new NotFoundError('Запрашиваемая страница не найдена');
 });
 
-app.use(errors());
-app.use(InternalServerError);
+app.use(errors()); // обработчик ошибок celebrate
+app.use(InternalServerError); // централизованный обработчик
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+app.listen(PORT, () => {});

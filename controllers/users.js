@@ -96,16 +96,13 @@ module.exports.updateProfile = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true, upsert: false },
   )
-    .then((user) => {
-      if (user) {
-        res.status(200).send({ user });
-        return;
-      }
-      next(new NotFoundError('Пользователь не найден'));
-    })
+    .then((user) =>
+      res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(new BadReqError('Переданы некорректные данные'));
+      } else {
+        next(err);
       }
     });
 };
