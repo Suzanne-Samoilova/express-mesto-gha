@@ -32,7 +32,7 @@ app.get('/crash-test', () => {
 
 // роуты, не требующие авторизации
 app.post('/signin', validateLogin, login);
-app.post('/signup', validateUser, createUser); // вернуть ошибку 403
+app.post('/signup', validateUser, createUser);
 
 // все роуты ниже этой строки будут защищены
 app.use(auth);
