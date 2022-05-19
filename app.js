@@ -43,7 +43,7 @@ app.all('*', () => {
   throw new NotFoundError('Запрашиваемая страница не найдена');
 });
 
-app.use(errors);
+app.use(errors());
 app.use(InternalServerError);
 
 app.listen(PORT, () => {
