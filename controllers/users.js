@@ -94,11 +94,11 @@ module.exports.updateProfile = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
     { name, about },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true, upsert: false, },
   )
     .then((user) => {
       if (user) {
-        res.status(200).send(user);
+        res.status(200).send({ user });
         return;
       }
       next(new NotFoundError('Пользователь не найден'));
