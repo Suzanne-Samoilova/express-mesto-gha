@@ -1,23 +1,3 @@
-export function findUserByCredentials(email, password) {
-  return this.findOne({ email }).select('+password')
-    .then((user) => {
-      if (!user) {
-        throw new AuthorizationError('Неправильные почта или пароль');
-      }
-
-      return bcrypt.compare(password, user.password)
-        .then((matched) => {
-          if (!matched) {
-            throw new AuthorizationError('Неправильные почта или пароль');
-          }
-
-          return user; // теперь user доступен
-        });
-    });
-
-
-}
-
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
@@ -76,24 +56,22 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// добавим метод findUserByCredentials схеме пользователя
-// у него будет два параметра — почта и пароль
-// userSchema.statics.findUserByCredentials = function fn(email, password) {
-//   return this.findOne({ email }).select('+password')
-//     .then((user) => {
-//       if (!user) {
-//         throw new AuthorizationError('Неправильные почта или пароль');
-//       }
-//
-//       return bcrypt.compare(password, user.password)
-//         .then((matched) => {
-//           if (!matched) {
-//             throw new AuthorizationError('Неправильные почта или пароль');
-//           }
-//
-//           return user; // теперь user доступен
-//         });
-//     });
-// };
+userSchema.statics.findUserByCredentials = function fn(email, password) {
+  return this.findOne({ email }).select('+password')
+    .then((user) => {
+      if (!user) {
+        throw new AuthorizationError('Неправильные почта или пароль');
+      }
+
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            throw new AuthorizationError('Неправильные почта или пароль');
+          }
+
+          return user;
+        });
+    });
+};
 
 module.exports = mongoose.model('user', userSchema);
