@@ -39,48 +39,22 @@ module.exports.getUserById = (req, res, next) => {
 // -----------------------------------------------------------------------------
 // Создать нового пользователя
 // -----------------------------------------------------------------------------
-// module.exports.createUser = (req, res, next) => {
-//   // хешируем пароль
-//   bcrypt.hash(req.body.password, 10)
-//     .then((hash) => User.create({
-//       email: req.body.email,
-//       password: hash, // записываем хеш в базу
-//       name: req.body.name,
-//       about: req.body.about,
-//       avatar: req.body.avatar,
-//     }))
-//     .then((user) => {
-//       res.status(200).send({
-//         email: user.email,
-//         name: user.name,
-//         about: user.about,
-//         avatar: user.avatar,
-//       });
-//     })
 module.exports.createUser = (req, res, next) => {
-  const {
-    name, about, avatar, email, password,
-  } = req.body;
-
-  const createUser = (hash) => User.create({
-    name,
-    about,
-    avatar,
-    email,
-    password: hash,
-  });
-
-  bcrypt
-    .hash(password, 10)
-    .then((hash) => createUser(hash))
+  // хешируем пароль
+  bcrypt.hash(req.body.password, 10)
+    .then((hash) => User.create({
+      email: req.body.email,
+      password: hash, // записываем хеш в базу
+      name: req.body.name,
+      about: req.body.about,
+      avatar: req.body.avatar,
+    }))
     .then((user) => {
-      const { _id } = user;
-      res.send({
-        _id,
-        name,
-        about,
-        avatar,
-        email,
+      res.status(200).send({
+        email: user.email,
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
       });
     })
     .catch((err) => {

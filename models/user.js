@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
       validator(email) {
         return validator.isEmail(email);
       },
-      // message: (props) => `${props.value} не является email`,
       message: 'неверный формат Email',
     },
   },
