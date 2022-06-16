@@ -46,7 +46,6 @@ const userSchema = new mongoose.Schema({
     validate: {
       validator(link) {
         return validator.isURL(link);
-        // return /^(https?:\/\/)?([\da-z.-]+).([a-z.]{2,6})([/\w.-]*)*\/?$/g.test(link);
       },
       message: 'неверный формат URL',
     },
