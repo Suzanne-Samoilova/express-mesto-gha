@@ -8,10 +8,11 @@ const usersRoutes = require('./routes/users');
 const cardsRoutes = require('./routes/cards');
 const NotFoundError = require('./errors/NotFoundError');
 const InternalServerError = require('./errors/InternalServerError');
-const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
-const { validateUser, validateLogin } = require('./middlewares/validations');
 const cors = require('./middlewares/cors');
+const { login, createUser } = require('./controllers/users');
+const { validateUser, validateLogin } = require('./middlewares/validations');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 
 const app = express();
@@ -28,6 +29,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -38,6 +40,9 @@ app.get('/crash-test', () => {
 // роуты, не требующие авторизации
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateUser, createUser);
+app.get('/signout', (req, res) => {
+  res.status(200).clearCookie('jwt').send({ message: 'Выход' });
+});
 
 // все роуты ниже этой строки будут защищены
 app.use(auth);
@@ -48,6 +53,7 @@ app.all('*', () => {
   throw new NotFoundError('Запрашиваемая страница не найдена');
 });
 
+app.use(errorLogger); // логирование ошибок winston
 app.use(errors()); // обработчик ошибок celebrate
 app.use(InternalServerError); // централизованный обработчик
 
