@@ -11,9 +11,14 @@ const InternalServerError = require('./errors/InternalServerError');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { validateUser, validateLogin } = require('./middlewares/validations');
+const cors = require('./middlewares/cors');
+
+
+const app = express();
 
 const { PORT = 3000 } = process.env;
-const app = express();
+
+app.use(cors);
 app.use(cookieParser());
 app.use(express.json());
 
