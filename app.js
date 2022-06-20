@@ -11,6 +11,7 @@ const NotFoundError = require('./errors/NotFoundError');
 const InternalServerError = require('./errors/InternalServerError');
 const auth = require('./middlewares/auth');
 const { allowedCors, cors } = require('./middlewares/cors');
+
 const { login, createUser } = require('./controllers/users');
 const { validateUser, validateLogin } = require('./middlewares/validations');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
