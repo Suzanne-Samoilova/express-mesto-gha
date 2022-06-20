@@ -52,3 +52,6 @@ app.use(errors()); // обработчик ошибок celebrate
 app.use(InternalServerError); // централизованный обработчик
 
 app.listen(PORT, () => {});
+
+// обновить сертификат 1 раз в 3 месяца (ближ 20.09.2022)
+// sudo certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
