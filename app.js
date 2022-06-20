@@ -4,19 +4,25 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
 
 const usersRoutes = require('./routes/users');
 const cardsRoutes = require('./routes/cards');
 const NotFoundError = require('./errors/NotFoundError');
 const InternalServerError = require('./errors/InternalServerError');
 const auth = require('./middlewares/auth');
-const { allowedCors, cors } = require('./middlewares/cors');
-
 const { login, createUser } = require('./controllers/users');
 const { validateUser, validateLogin } = require('./middlewares/validations');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
+
+const allowedCors = [
+  'https://mesto.front.suz.nomoreparties.sbs/',
+  'https://api.mesto.suz.nomoreparties.sbs',
+  'http://localhost:3000',
+  'https://localhost:3000',
+];
 
 const { PORT = 3000 } = process.env;
 
