@@ -1,8 +1,8 @@
 const allowedCors = [
-  'http://localhost:3000',
-  'https://localhost:3000',
   'https://mesto.front.suz.nomoreparties.sbs/',
   'https://api.mesto.suz.nomoreparties.sbs',
+  'http://localhost:3000',
+  'https://localhost:3000',
 ];
 
 const cors = (req, res, next) => {
@@ -30,4 +30,9 @@ const cors = (req, res, next) => {
   return next();
 };
 
-module.exports = cors;
+// module.exports = cors;
+
+module.exports = {
+  allowedCors,
+  cors,
+};
