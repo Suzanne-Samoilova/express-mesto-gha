@@ -1,8 +1,8 @@
 const allowedCors = [
   'http://localhost:3000',
   'https://localhost:3000',
-  'https://http://mesto.front.suz.nomoreparties.sbs/',
-  'https://api.http://mesto.front.suz.nomoreparties.sbs/',
+  'https://mesto.front.suz.nomoreparties.sbs/',
+  'https://api.mesto.suz.nomoreparties.sbs',
 ];
 
 const cors = (req, res, next) => {
