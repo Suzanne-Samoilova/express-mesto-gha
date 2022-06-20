@@ -40,9 +40,6 @@ app.get('/crash-test', () => {
 // роуты, не требующие авторизации
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateUser, createUser);
-app.get('/signout', (req, res) => {
-  res.status(200).clearCookie('jwt').send({ message: 'Выход' });
-});
 
 // все роуты ниже этой строки будут защищены
 app.use(auth);
@@ -51,6 +48,10 @@ app.use('/', usersRoutes);
 app.use('/', cardsRoutes);
 app.all('*', () => {
   throw new NotFoundError('Запрашиваемая страница не найдена');
+});
+
+app.get('/signout', (req, res) => {
+  res.status(200).clearCookie('jwt').send({ message: 'Выход' });
 });
 
 app.use(errorLogger); // логирование ошибок winston
