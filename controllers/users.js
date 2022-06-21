@@ -146,14 +146,16 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      // токен
-      res
-        .cookie('jwt', token, {
-          maxAge: 604800,
-          httpOnly: true,
-          sameSite: true,
-        })
-        .send({ message: 'Авторизация прошла успешно' });
+
+      res.send({ token });
+      // res
+      //   .cookie('jwt', token, {
+      //     maxAge: 604800,
+      //     httpOnly: true,
+      //     sameSite: true,
+      //   })
+      //   .send({ message: 'Авторизация прошла успешно' });
+
     })
     .catch(() => {
       next(new AuthorizationError('Неверные почта или пароль'));
