@@ -155,7 +155,6 @@ module.exports.login = (req, res, next) => {
       //     sameSite: true,
       //   })
       //   .send({ message: 'Авторизация прошла успешно' });
-
     })
     .catch(() => {
       next(new AuthorizationError('Неверные почта или пароль'));
