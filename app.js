@@ -15,11 +15,9 @@ const { login, createUser } = require('./controllers/users');
 const { validateUser, validateLogin } = require('./middlewares/validations');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const app = express();
 
 const { PORT = 3000 } = process.env;
-
-app.use(cors);
+const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
@@ -28,9 +26,12 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
 
+app.use(cors);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(requestLogger);
+
+app.use(requestLogger); // подкл логгер запросов
 
 app.get('/crash-test', () => {
   setTimeout(() => {
