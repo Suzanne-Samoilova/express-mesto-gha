@@ -59,9 +59,9 @@ app.all('*', () => {
   throw new NotFoundError('Запрашиваемая страница не найдена');
 });
 
-app.get('/signout', (req, res) => {
-  res.status(200).clearCookie('jwt').send({ message: 'Выход' });
-});
+// app.get('/signout', (req, res) => {
+//   res.status(200).clearCookie('jwt').send({ message: 'Выход' });
+// });
 
 app.use(errorLogger); // логирование ошибок winston
 app.use(errors()); // обработчик ошибок celebrate
