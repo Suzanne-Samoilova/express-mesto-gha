@@ -1,15 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const cors = require('./middlewares/cors');
+require('dotenv').config();
+const cors = require('cors');
 
 const usersRoutes = require('./routes/users');
 const cardsRoutes = require('./routes/cards');
 const NotFoundError = require('./errors/NotFoundError');
 const InternalServerError = require('./errors/InternalServerError');
+// const cors = require('./middlewares/cors');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
 const { validateUser, validateLogin } = require('./middlewares/validations');
@@ -17,6 +18,17 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+const allowedCors = [
+  'https://mesto.front.suz.nomoreparties.sbs/',
+  'https://api.mesto.suz.nomoreparties.sbs',
+  'http://localhost:3000',
+  'https://localhost:3000',
+];
+
+app.use(cors({
+  origin: allowedCors,
+}));
 
 app.use(cookieParser());
 app.use(express.json());
