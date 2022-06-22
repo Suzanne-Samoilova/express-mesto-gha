@@ -84,7 +84,7 @@ module.exports.dislikeCard = (req, res, next) => {
     { new: true },
   )
     .orFail(() => new NotFoundError('Карточка не найдена'))
-    .then((card) => res.status(200).send({ data: card }))
+    .then((card) => res.status(200).send({ card }))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadReqError('Переданы некорректные данные'));
