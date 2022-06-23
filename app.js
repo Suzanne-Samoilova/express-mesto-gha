@@ -10,7 +10,6 @@ const usersRoutes = require('./routes/users');
 const cardsRoutes = require('./routes/cards');
 const NotFoundError = require('./errors/NotFoundError');
 const InternalServerError = require('./errors/InternalServerError');
-// const cors = require('./middlewares/cors');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
 const { validateUser, validateLogin } = require('./middlewares/validations');
@@ -19,12 +18,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT = 3000 } = process.env;
 const app = express();
 
-// const allowedCors = [
-//   'https://mesto.front.suz.nomoreparties.sbs/',
-//   'https://api.mesto.suz.nomoreparties.sbs',
-//   'http://localhost:3000',
-//   'https://localhost:3000',
-// ];
 
 app.use(cookieParser());
 app.use(express.json());
@@ -58,10 +51,6 @@ app.use('/', cardsRoutes);
 app.all('*', () => {
   throw new NotFoundError('Запрашиваемая страница не найдена');
 });
-
-// app.get('/signout', (req, res) => {
-//   res.status(200).clearCookie('jwt').send({ message: 'Выход' });
-// });
 
 app.use(errorLogger); // логирование ошибок winston
 app.use(errors()); // обработчик ошибок celebrate
